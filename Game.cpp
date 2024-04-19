@@ -14,7 +14,8 @@ public:
 
 
 private:
-    char gameBoard[3][3];
+    const static int gameBoardSize = 3;
+    char gameBoard[gameBoardSize][gameBoardSize];
     const char playerX = 'X';
     const char playerO = 'O';
     char currentPlayer;
@@ -23,8 +24,8 @@ private:
     // Make the game board be set with chars of integer 1 - 9. Set round number to 0.
     void initializeNewGame() {
         int counter = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < gameBoardSize; i++) {
+            for (int j = 0; j < gameBoardSize; j++) {
                 gameBoard[i][j] = static_cast<char>(counter + '0'); // Print the correct ASCII char.
                 counter++;
             }
@@ -37,9 +38,9 @@ private:
     void printBoard() {
         const std::string line = "+---+---+---+";
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < gameBoardSize; i++) {
             std::cout << line << std::endl;
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < gameBoardSize; j++) {
                 char coor = gameBoard[i][j];
                 std::cout << "| " << coor << " ";
             }
@@ -138,10 +139,11 @@ private:
             return false;
         } else {
             // Check if the player mark is on a non-taken slot.
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < gameBoardSize; i++) {
+                for (int j = 0; j < gameBoardSize; j++) {
                     if (gameBoard[i][j] == playerChoiceChar) {
                         gameBoard[i][j] = currentPlayer;
+                        std::cout << "Player selected slot " << playerChoiceChar << std::endl;
                         return true;
                     }
                 }
@@ -153,7 +155,7 @@ private:
 
     // Check if there is a winner of the current game.
     bool checkIfWinner(char player) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < gameBoardSize; i++) {
             // Check rows
             if (gameBoard[i][0] == gameBoard[i][1] && gameBoard[i][1] == gameBoard[i][2] && gameBoard[i][0] == player) {
                 std::cout << "Player " << player << " wins by row! GZ!" << std::endl;
